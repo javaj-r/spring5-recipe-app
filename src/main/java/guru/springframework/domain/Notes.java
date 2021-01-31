@@ -1,27 +1,17 @@
 package guru.springframework.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Notes {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Notes extends BaseEntity {
 
     @OneToOne
     private Recipe recipe;
 
     @Lob
     private String recipeNotes;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Recipe getRecipe() {
         return recipe;

@@ -1,26 +1,17 @@
 package guru.springframework.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
-public class UnitOfMeasure {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UnitOfMeasure extends BaseEntity {
 
     private String description;
 
-    @OneToOne
-    private Ingredient ingredient;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "unitOfMeasure", fetch = FetchType.EAGER)
+    private Set<Ingredient> ingredients;
 
     public String getDescription() {
         return description;
@@ -30,11 +21,16 @@ public class UnitOfMeasure {
         this.description = description;
     }
 
-    public Ingredient getIngredient() {
-        return ingredient;
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public UnitOfMeasure addIngredient(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
+        return this;
     }
 }

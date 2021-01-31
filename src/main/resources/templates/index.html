@@ -7,5 +7,26 @@
 <body>
 <h2 th:text="${title} + '!'"></h2>
 
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Source</th>
+        <th>Url</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="recipe: ${recipes}">
+        <td th:text="${recipe.getId()}"></td>
+        <td th:text="${recipe.getDescription()}"></td>
+        <td th:text="${recipe.getSource()}"></td>
+        <td>
+            <a th:href="${recipe.getUrl()}" th:text="${recipe.getUrl()}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>
