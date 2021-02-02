@@ -1,9 +1,15 @@
 package guru.springframework.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Recipe extends BaseEntity {
 
@@ -34,103 +40,12 @@ public class Recipe extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
-    public String getDescription() {
-        return description;
+    public static Builder builder() {
+        return new Builder(new HashSet<>(), new HashSet<>());
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getPrepTime() {
-        return prepTime;
-    }
-
-    public void setPrepTime(Integer prepTime) {
-        this.prepTime = prepTime;
-    }
-
-    public Integer getCookTime() {
-        return cookTime;
-    }
-
-    public void setCookTime(Integer cookTime) {
-        this.cookTime = cookTime;
-    }
-
-    public Integer getServings() {
-        return servings;
-    }
-
-    public void setServings(Integer servings) {
-        this.servings = servings;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getDirections() {
-        return directions;
-    }
-
-    public void setDirections(String directions) {
-        this.directions = directions;
-    }
-
-    public Byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(Byte[] image) {
-        this.image = image;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public Notes getNotes() {
-        return notes;
-    }
-
-    public void setNotes(Notes notes) {
-        this.notes = notes;
-    }
-
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
-
+    @ToString
+    @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Builder {
         private String description;
         private Integer prepTime;
@@ -145,92 +60,75 @@ public class Recipe extends BaseEntity {
         private final Set<Ingredient> ingredients;
         private final Set<Category> categories;
 
-        public Builder() {
-            this.ingredients = new HashSet<>();
-            this.categories = new HashSet<>();
-        }
-
-        public Recipe.Builder setDescription(String description) {
+        public Builder description(String description) {
             this.description = description;
             return this;
         }
 
-        public Recipe.Builder setPrepTime(Integer prepTime) {
+        public Builder prepTime(Integer prepTime) {
             this.prepTime = prepTime;
             return this;
         }
 
-        public Recipe.Builder setCookTime(Integer cookTime) {
+        public Builder cookTime(Integer cookTime) {
             this.cookTime = cookTime;
             return this;
         }
 
-        public Recipe.Builder setServings(Integer servings) {
+        public Builder servings(Integer servings) {
             this.servings = servings;
             return this;
         }
 
-        public Recipe.Builder setSource(String source) {
+        public Builder source(String source) {
             this.source = source;
             return this;
         }
 
-        public Recipe.Builder setUrl(String url) {
+        public Builder url(String url) {
             this.url = url;
             return this;
         }
 
-        public Recipe.Builder setDirections(String directions) {
+        public Builder directions(String directions) {
             this.directions = directions;
             return this;
         }
 
-        public Recipe.Builder setImage(Byte[] image) {
+        public Builder setImage(Byte[] image) {
             this.image = image;
             return this;
         }
 
-        public Recipe.Builder setDifficulty(Difficulty difficulty) {
+        public Builder difficulty(Difficulty difficulty) {
             this.difficulty = difficulty;
             return this;
         }
 
-        public Recipe.Builder setNotes(Notes notes) {
+        public Builder notes(Notes notes) {
             this.notes = notes;
             return this;
         }
 
-        public Recipe.Builder setNotes(String notes) {
+        public Builder notes(String notes) {
             this.notes = new Notes();
             this.notes.setRecipeNotes(notes);
             return this;
         }
 
-        public Recipe.Builder addIngredient(Ingredient ingredient) {
+        public Builder addIngredient(Ingredient ingredient) {
             this.ingredients.add(ingredient);
             return this;
         }
 
-        public Recipe.Builder addCategory(Category category) {
+        public Builder addCategory(Category category) {
             this.categories.add(category);
             return this;
         }
 
         public Recipe build() {
-            Recipe recipe = new Recipe();
-
-            recipe.description = this.description;
-            recipe.prepTime = this.prepTime;
-            recipe.cookTime = this.cookTime;
-            recipe.servings = this.servings;
-            recipe.source = this.source;
-            recipe.url = this.url;
-            recipe.directions = this.directions;
-            recipe.image = this.image;
-            recipe.difficulty = this.difficulty;
-            recipe.notes = this.notes;
-            recipe.ingredients = this.ingredients;
-            recipe.categories = this.categories;
+            Recipe recipe  = new Recipe(description, prepTime, cookTime, servings, source,
+                    url, directions, image, difficulty, notes, ingredients, categories);
 
             notes.setRecipe(recipe);
             ingredients.forEach(ingredient -> ingredient.setRecipe(recipe));

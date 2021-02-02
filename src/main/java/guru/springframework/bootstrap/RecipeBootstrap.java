@@ -4,6 +4,9 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -14,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
+@RequiredArgsConstructor
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -21,38 +26,35 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final CategoryRepository categoryRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    public RecipeBootstrap(RecipeRepository recipeRepository, CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
-        this.recipeRepository = recipeRepository;
-        this.categoryRepository = categoryRepository;
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
-    }
-
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         recipeRepository.saveAll(getRecipes());
+        log.debug("Loading Bootstrap Data");
+
     }
 
     private List<Recipe> getRecipes() {
         List<Recipe> recipes = new ArrayList<>();
 
-        final String uomEach = "Each";
-        final String uomTeaspoon = "Teaspoon";
-        final String uomTablespoon = "Tablespoon";
-        final String uomDash = "Dash";
-        final String uomPint = "Pint";
-        final String uomCup = "Cup";
-        final String categoryAmerican = "American";
-        final String categoryMexican = "Mexican";
+        val uomEach = "Each";
+        val uomTeaspoon = "Teaspoon";
+        val uomTablespoon = "Tablespoon";
+        val uomDash = "Dash";
+        val uomPint = "Pint";
+        val uomCup = "Cup";
+        val categoryAmerican = "American";
+        val categoryMexican = "Mexican";
 
         // get UOMs
-        Map<String, UnitOfMeasure> uomMap = getUnitOfMeasures(uomEach, uomTeaspoon, uomTablespoon, uomDash, uomPint, uomCup);
+        val uomMap = getUnitOfMeasures(uomEach, uomTeaspoon, uomTablespoon, uomDash, uomPint, uomCup);
+
         // get Categories
-        Map<String, Category> categoryMap = getCategories(categoryAmerican, categoryMexican);
+        val categoryMap = getCategories(categoryAmerican, categoryMexican);
 
         Recipe.Builder recipeBuilder;
 
         // Yummy Guacamole
-        String directions = "1 Cut the avocado, remove flesh: Cut the avocados in half. Remove the pit. "
+        var directions = "1 Cut the avocado, remove flesh: Cut the avocados in half. Remove the pit. "
                 + "Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. "
                 + "(See How to Cut and Peel an Avocado.) Place in a bowl."
                 + "\n" + "2 Mash with a fork: Using a fork, roughly mash the avocado. "
@@ -71,7 +73,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 + "place plastic wrap on the surface of the guacamole and press down to cover it and to prevent air reaching it. "
                 + "(The oxygen in the air causes oxidation which will turn the guacamole brown.) Refrigerate until ready to serve.";
 
-        String recipeNotes = "Simple Guacamole: The simplest version of guacamole is just mashed avocados with salt. "
+        var recipeNotes = "Simple Guacamole: The simplest version of guacamole is just mashed avocados with salt. "
                 + "Don’t let the lack of availability of other ingredients stop you from making guacamole."
                 + "\n" + "Quick guacamole: For a very quick guacamole just "
                 + "take a 1/4 cup of salsa and mix it in with your mashed avocados."
@@ -79,16 +81,16 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 + "add either sour cream or cottage cheese to your guacamole dip. "
                 + "Purists may be horrified, but so what? It tastes great.";
 
-        recipeBuilder = new Recipe.Builder()
-                .setDescription("Perfect Guacamole")
-                .setPrepTime(10)
-                .setCookTime(0)
-                .setServings(4)
-                .setSource("Elise Bauer")
-                .setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/")
-                .setDirections(directions)
-                .setDifficulty(Difficulty.EASY)
-                .setNotes(recipeNotes)
+        recipeBuilder = Recipe.builder()
+                .description("Perfect Guacamole")
+                .prepTime(10)
+                .cookTime(0)
+                .servings(4)
+                .source("Elise Bauer")
+                .url("https://www.simplyrecipes.com/recipes/perfect_guacamole/")
+                .directions(directions)
+                .difficulty(Difficulty.EASY)
+                .notes(recipeNotes)
                 .addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), uomMap.get(uomEach)))
                 .addIngredient(new Ingredient("Kosher salt", new BigDecimal(".25"), uomMap.get(uomTeaspoon)))
                 .addIngredient(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(1), uomMap.get(uomTablespoon)))
@@ -100,10 +102,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 .addCategory(categoryMap.get(categoryAmerican))
                 .addCategory(categoryMap.get(categoryMexican));
 
-        Recipe guacRecipe = recipeBuilder.build();
+        val guacRecipe = recipeBuilder.build();
 
         recipes.add(guacRecipe);
-
 
         // Yummy Tacos
         directions = "1 Prepare a gas or charcoal grill for medium-high, direct heat."
@@ -137,16 +138,16 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 + "\n" + "You could also easily double or even triple this recipe for a larger party. "
                 + "A taco and a cold beer on a warm day? Now that’s living!";
 
-        recipeBuilder = new Recipe.Builder()
-                .setDescription("Spicy Grilled Chicken Tacos")
-                .setPrepTime(20)
-                .setCookTime(15)
-                .setServings(6)
-                .setSource("Sally Vargas")
-                .setUrl("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/")
-                .setDirections(directions)
-                .setDifficulty(Difficulty.MODERATE)
-                .setNotes(recipeNotes)
+        recipeBuilder = Recipe.builder()
+                .description("Spicy Grilled Chicken Tacos")
+                .prepTime(20)
+                .cookTime(15)
+                .servings(6)
+                .source("Sally Vargas")
+                .url("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/")
+                .directions(directions)
+                .difficulty(Difficulty.MODERATE)
+                .notes(recipeNotes)
                 .addIngredient(new Ingredient("Ancho Chili Powder", new BigDecimal(2), uomMap.get(uomTablespoon)))
                 .addIngredient(new Ingredient("Dried Oregano", new BigDecimal(1), uomMap.get(uomTeaspoon)))
                 .addIngredient(new Ingredient("Dried Cumin", new BigDecimal(1), uomMap.get(uomTeaspoon)))
@@ -170,7 +171,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 .addCategory(categoryMap.get(categoryAmerican))
                 .addCategory(categoryMap.get(categoryMexican));
 
-        Recipe tacosRecipe = recipeBuilder.build();
+        val tacosRecipe = recipeBuilder.build();
 
         recipes.add(tacosRecipe);
 
