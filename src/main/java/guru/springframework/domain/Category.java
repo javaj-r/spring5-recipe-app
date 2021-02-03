@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = "recipes")
+@EqualsAndHashCode(callSuper = true, exclude = "recipes")
 @Entity
 public class Category extends BaseEntity {
 

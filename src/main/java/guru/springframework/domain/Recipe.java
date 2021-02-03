@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true, exclude = {"notes", "ingredients", "categories"})
 @Entity
 public class Recipe extends BaseEntity {
 
@@ -44,7 +46,9 @@ public class Recipe extends BaseEntity {
         return new Builder(new HashSet<>(), new HashSet<>());
     }
 
+    @Setter
     @ToString
+    @Accessors(fluent = true, chain = true)
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Builder {
         private String description;
@@ -59,56 +63,6 @@ public class Recipe extends BaseEntity {
         private Notes notes;
         private final Set<Ingredient> ingredients;
         private final Set<Category> categories;
-
-        public Builder description(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder prepTime(Integer prepTime) {
-            this.prepTime = prepTime;
-            return this;
-        }
-
-        public Builder cookTime(Integer cookTime) {
-            this.cookTime = cookTime;
-            return this;
-        }
-
-        public Builder servings(Integer servings) {
-            this.servings = servings;
-            return this;
-        }
-
-        public Builder source(String source) {
-            this.source = source;
-            return this;
-        }
-
-        public Builder url(String url) {
-            this.url = url;
-            return this;
-        }
-
-        public Builder directions(String directions) {
-            this.directions = directions;
-            return this;
-        }
-
-        public Builder setImage(Byte[] image) {
-            this.image = image;
-            return this;
-        }
-
-        public Builder difficulty(Difficulty difficulty) {
-            this.difficulty = difficulty;
-            return this;
-        }
-
-        public Builder notes(Notes notes) {
-            this.notes = notes;
-            return this;
-        }
 
         public Builder notes(String notes) {
             this.notes = new Notes();

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "recipe")
+@EqualsAndHashCode(callSuper = true, exclude = "recipe")
 @Entity
 public class Ingredient extends BaseEntity {
 
