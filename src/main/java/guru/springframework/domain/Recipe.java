@@ -84,7 +84,9 @@ public class Recipe extends BaseEntity {
             Recipe recipe  = new Recipe(description, prepTime, cookTime, servings, source,
                     url, directions, image, difficulty, notes, ingredients, categories);
 
-            notes.setRecipe(recipe);
+            if (notes != null) {
+                notes.setRecipe(recipe);
+            }
             ingredients.forEach(ingredient -> ingredient.setRecipe(recipe));
             categories.forEach(category -> category.addRecipe(recipe));
 
