@@ -11,7 +11,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true, exclude = {"notes", "ingredients", "categories"})
+@EqualsAndHashCode(callSuper = true)//, exclude = {"notes", "ingredients", "categories"})
 @Entity
 public class Recipe extends BaseEntity {
 
