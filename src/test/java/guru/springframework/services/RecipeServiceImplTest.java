@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.*;
 
-public class RecipeServiceImplTest {
+class RecipeServiceImplTest {
 
     RecipeService recipeService;
 
@@ -25,7 +25,7 @@ public class RecipeServiceImplTest {
     Recipe recipe;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
         HashSet<Recipe> recipes = new HashSet<>();
@@ -50,7 +50,7 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void getRecipes() {
+    void getRecipes() {
         Recipe actualRecipe = recipeService.getRecipes().toArray(new Recipe[0])[0];
         assertEquals(recipe, actualRecipe);
         assertNotEquals(new Recipe(), actualRecipe);

@@ -16,20 +16,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Javid
  * IT: IntegrationTest
  * Integration Test for {@link UnitOfMeasureRepository}
- * */
+ */
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-public class UnitOfMeasureRepositoryIT {
+class UnitOfMeasureRepositoryIT {
 
     @Autowired
     UnitOfMeasureRepository unitOfMeasureRepository;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
     }
 
     @Test
-    public void findByDescription() {
+    void findByDescription() {
         Optional<UnitOfMeasure> optionalUnitOfMeasure = unitOfMeasureRepository.findByDescription("Tablespoon");
 
         assertEquals("Tablespoon", optionalUnitOfMeasure.orElse(new UnitOfMeasure()).getDescription());
@@ -37,7 +37,7 @@ public class UnitOfMeasureRepositoryIT {
 
 
     @Test
-    public void findByDescriptionCup() {
+    void findByDescriptionCup() {
         Optional<UnitOfMeasure> optionalUnitOfMeasure = unitOfMeasureRepository.findByDescription("Cup");
 
         assertEquals("Cup", optionalUnitOfMeasure.orElse(new UnitOfMeasure()).getDescription());
