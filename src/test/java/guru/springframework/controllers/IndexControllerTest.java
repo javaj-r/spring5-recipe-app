@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-public class IndexControllerTest {
+class IndexControllerTest {
 
     IndexController controller;
 
@@ -39,14 +39,14 @@ public class IndexControllerTest {
     }
 
     @Test
-    public void getIndex() {
+    void getIndex() {
         String actual = controller.getIndex(model);
         assertEquals("index", actual);
         verify(recipeService, times(1)).getRecipes();
     }
 
     @Test
-    public void getIndex_WhenAddAttribute() {
+    void getIndex_WhenAddAttribute() {
         // given
         Set<Recipe> recipes;
         Recipe recipe1 = Recipe.builder().build();
@@ -72,7 +72,7 @@ public class IndexControllerTest {
     }
 
     @Test
-    public void testMockMVC() throws Exception {
+    void testMockMVC() throws Exception {
         // given
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         // when
