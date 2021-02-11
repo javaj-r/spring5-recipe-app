@@ -101,11 +101,11 @@
                     <parallel>none</parallel>
                 </configuration>
             </plugin>
-            <!-- This causes error
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M5</version>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <!-- This causes error
 				<dependencies>
 					<dependency>
 						<groupId>org.junit.platform</groupId>
@@ -114,8 +114,9 @@
 						<scope>test</scope>
 					</dependency>
 				</dependencies>
-			</plugin>
-            -->
+				-->
+            </plugin>
+
         </plugins>
     </build>
 
