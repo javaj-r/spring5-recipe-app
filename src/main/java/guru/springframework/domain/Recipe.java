@@ -51,6 +51,7 @@ public class Recipe extends BaseEntity {
     @Accessors(fluent = true, chain = true)
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Builder {
+        private Long id;
         private String description;
         private Integer prepTime;
         private Integer cookTime;
@@ -83,6 +84,8 @@ public class Recipe extends BaseEntity {
         public Recipe build() {
             Recipe recipe  = new Recipe(description, prepTime, cookTime, servings, source,
                     url, directions, image, difficulty, notes, ingredients, categories);
+
+            recipe.setId(this.id);
 
             if (notes != null) {
                 notes.setRecipe(recipe);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title=${'Recipe Home'}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title=${'My Recipies'}">
 <head>
     <meta charset="UTF-8">
 
@@ -32,17 +32,27 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Description</th>
-                                <th>Source</th>
-                                <th>Url</th>
+                                <th>View</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <tr th:remove="all">
+                                <td>123</td>
+                                <td>Tasty Goodness 1</td>
+                                <td><a href="#">View</a></td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td>23564</td>
+                                <td>Tasty Goodness 2</td>
+                                <td><a href="#">View</a></td>
+                            </tr>
+
                             <tr th:each="recipe: ${recipes}">
-                                <td th:text="${recipe.getId()}"></td>
-                                <td th:text="${recipe.getDescription()}"></td>
-                                <td th:text="${recipe.getSource()}"></td>
+                                <!-- /*@thymesVar id="recipe" type="guru.springframework.domain.Recipe" */-->
+                                <td th:text="${recipe.id}">93464</td>
+                                <td th:text="${recipe.description}">Tasty Goodness 3</td>
                                 <td>
-                                    <a th:href="${recipe.getUrl()}" th:text="${recipe.getUrl()}"></a>
+                                    <a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">View</a>
                                 </td>
                             </tr>
                             </tbody>

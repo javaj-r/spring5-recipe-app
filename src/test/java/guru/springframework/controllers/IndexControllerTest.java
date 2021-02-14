@@ -42,7 +42,7 @@ class IndexControllerTest {
     void getIndex() {
         String actual = controller.getIndex(model);
         assertEquals("index", actual);
-        verify(recipeService, times(1)).getRecipes();
+        verify(recipeService, times(1)).findAll();
     }
 
     @Test
@@ -58,7 +58,7 @@ class IndexControllerTest {
         recipes.add(recipe1);
         recipes.add(recipe2);
 
-        when(recipeService.getRecipes()).thenReturn(recipes);
+        when(recipeService.findAll()).thenReturn(recipes);
 
         ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 

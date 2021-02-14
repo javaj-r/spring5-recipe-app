@@ -17,9 +17,14 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Set<Recipe> getRecipes() {
+    public Set<Recipe> findAll() {
         Set<Recipe> recipes = new HashSet<>();
         repository.findAll().forEach(recipes::add);
         return recipes;
+    }
+
+    @Override
+    public Recipe findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Recipe Not Found!"));
     }
 }

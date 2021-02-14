@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+          rel="stylesheet" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/5.0.0-beta1/css/bootstrap.min.css}"/>
+
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"
+            th:src="@{/webjars/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js}"></script>
+
+    <style type="text/css">
+
+        .card-margin {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+
+            <div class="card align-content-center card-margin">
+                <div class="card-header">
+                    <h3 class="card-title h3" th:text="${recipe.description}">Descriptions</h3>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5>Categories:</h5>
+                        </div>
+                        <div class="col-md-9">
+                            <ul>
+                                <li>Cat 1</li>
+                                <li>Cat 2</li>
+                                <li>Cat 3</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5>Prep time:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <p>30 min</p>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>Difficulty:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Easy</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5>Cook time:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <p>30 min</p>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>Serving:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <p>4</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5>Source:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <p>30 min</p>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>URL:</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <p>http://www.example.com</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card align-content-center card-margin">
+                <div class="card-header">
+                    <h3 class="card-title">Ingredients</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul>
+                                <li>1 Cup of milk</li>
+                                <li>1 Teaspoon of chocolate</li>
+                                <li>1 Teaspoon of sugar</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card align-content-center card-margin">
+                <div class="card-header">
+                    <h3 class="card-title">Directions</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>This is Directions paragraph.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card align-content-center card-margin">
+                <div class="card-header">
+                    <h3 class="card-title">Notes</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>This is Notes paragraph.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
