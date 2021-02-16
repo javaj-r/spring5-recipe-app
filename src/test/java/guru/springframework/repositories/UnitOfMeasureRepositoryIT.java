@@ -1,7 +1,6 @@
 package guru.springframework.repositories;
 
 import guru.springframework.domain.UnitOfMeasure;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * IT: IntegrationTest
  * Integration Test for {@link UnitOfMeasureRepository}
  */
+
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 class UnitOfMeasureRepositoryIT {
@@ -24,17 +24,12 @@ class UnitOfMeasureRepositoryIT {
     @Autowired
     UnitOfMeasureRepository unitOfMeasureRepository;
 
-    @BeforeEach
-    void setUp() throws Exception {
-    }
-
     @Test
     void findByDescription() {
         Optional<UnitOfMeasure> optionalUnitOfMeasure = unitOfMeasureRepository.findByDescription("Tablespoon");
 
         assertEquals("Tablespoon", optionalUnitOfMeasure.orElse(new UnitOfMeasure()).getDescription());
     }
-
 
     @Test
     void findByDescriptionCup() {

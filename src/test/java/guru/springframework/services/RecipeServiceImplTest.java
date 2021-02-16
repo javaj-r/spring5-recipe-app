@@ -5,6 +5,7 @@ import guru.springframework.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -17,18 +18,15 @@ import static org.mockito.Mockito.*;
 
 class RecipeServiceImplTest {
 
-    RecipeService recipeService;
+    @InjectMocks
+    RecipeServiceImpl recipeService;
 
     @Mock
     RecipeRepository repository;
 
-    Recipe recipe;
-
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
-
-        recipeService = new RecipeServiceImpl(repository);
     }
 
     @Test

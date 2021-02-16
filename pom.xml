@@ -114,7 +114,9 @@
                     <includes>
                         <include>**/*IT.java</include>
                     </includes>
-                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+                    </additionalClasspathElements>
                     <parallel>none</parallel>
                 </configuration>
             </plugin>
