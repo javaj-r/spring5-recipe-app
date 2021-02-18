@@ -1,7 +1,6 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
-import guru.springframework.domain.Recipe;
 import guru.springframework.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,15 +40,18 @@ class RecipeControllerTest {
     @Test
     void getRecipe() throws Exception {
         // given
-        Recipe recipe = Recipe.builder().id(1L).build();
-        when(recipeService.findById(anyLong())).thenReturn(recipe);
+        RecipeCommand command = new RecipeCommand();
+        command.setId(1L);
+        when(recipeService.findCommandById(anyLong())).thenReturn(command);
         // when
         mockMvc.perform(get("/recipe/1/show"))
                 // then
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"))
-                .andExpect(model().attribute("recipe", instanceOf(Recipe.class)));
+                .andExpect(model().attribute("recipe", instanceOf(RecipeCommand.class)));
+
+        verify(recipeService).findCommandById(anyLong());
     }
 
     @Test
@@ -79,6 +82,8 @@ class RecipeControllerTest {
                 // then
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/show"));
+
+        verify(recipeService).saveRecipeCommand(any());
     }
 
     @Test
@@ -94,6 +99,8 @@ class RecipeControllerTest {
                 .andExpect(view().name("recipe/form"))
                 .andExpect(model().attributeExists("recipe"))
                 .andExpect(model().attribute("recipe", instanceOf(RecipeCommand.class)));
+
+        verify(recipeService).findCommandById(any());
     }
 
     @Test
@@ -105,6 +112,7 @@ class RecipeControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
 
+        verify(recipeService).deleteById(anyLong());
     }
 
 }

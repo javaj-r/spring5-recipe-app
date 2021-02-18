@@ -152,7 +152,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 .addIngredient(new Ingredient("Dried Oregano", new BigDecimal(1), uomMap.get(uomTeaspoon)))
                 .addIngredient(new Ingredient("Dried Cumin", new BigDecimal(1), uomMap.get(uomTeaspoon)))
                 .addIngredient(new Ingredient("Sugar", new BigDecimal(1), uomMap.get(uomTeaspoon)))
-                .addIngredient(new Ingredient("salt", new BigDecimal(".5"), uomMap.get(uomTeaspoon)))
+                .addIngredient(new Ingredient("Salt", new BigDecimal(".5"), uomMap.get(uomTeaspoon)))
                 .addIngredient(new Ingredient("Clove of Garlic, Chopped", new BigDecimal(1), uomMap.get(uomEach)))
                 .addIngredient(new Ingredient("finely grated orange zest", new BigDecimal(1), uomMap.get(uomTablespoon)))
                 .addIngredient(new Ingredient("fresh-squeezed orange juice", new BigDecimal(3), uomMap.get(uomTablespoon)))
