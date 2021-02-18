@@ -34,6 +34,7 @@
                                 <th>Description</th>
                                 <th>View</th>
                                 <th>Update</th>
+                                <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -42,12 +43,14 @@
                                 <td>Tasty Goodness 1</td>
                                 <td><a class="btn btn-sm btn-outline-primary" role="button" href="#">View</a></td>
                                 <td><a class="btn btn-sm btn-outline-primary" role="button" href="#">Update</a></td>
+                                <td><a class="btn btn-sm btn-outline-primary" role="button" href="#">Delete</a></td>
                             </tr>
                             <tr th:remove="all">
                                 <td>23564</td>
                                 <td>Tasty Goodness 2</td>
                                 <td><a class="btn btn-sm btn-outline-primary" role="button" href="#">View</a></td>
                                 <td><a class="btn btn-sm btn-outline-primary" role="button" href="#">Update</a></td>
+                                <td><a class="btn btn-sm btn-outline-primary" role="button" href="#">Delete</a></td>
                             </tr>
 
                             <!-- /*@thymesVar id="recipe" type="guru.springframework.domain.Recipe" */-->
@@ -61,6 +64,10 @@
                                 <td>
                                     <a class="btn btn-sm btn-outline-primary" role="button" href="#"
                                        th:href="${(path + '/update')}">Update</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-primary" role="button" href="#"
+                                       th:href="${(path + '/delete')}">Delete</a>
                                 </td>
                             </tr>
                             </tbody>

@@ -7,10 +7,14 @@ import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -77,6 +81,38 @@ class RecipeServiceIT {
     @Test
     void testSaveNull() {
         assertNull(recipeService.saveRecipeCommand(null));
+    }
+
+    @Test
+    void findCommandById() {
+        // given
+        Iterable<Recipe> recipes = recipeRepository.findAll();
+        Long id = recipes.iterator().next().getId();
+
+        // when
+        RecipeCommand recipeCommand = recipeService.findCommandById(id);
+
+        // then
+        assertNotNull(recipeCommand);
+        assertEquals(id, recipeCommand.getId());
+    }
+
+    @Test
+    void findCommandByIdNotFound() {
+        // given
+        Set<Long> idSet = new HashSet<>();
+        recipeRepository.findAll().forEach(recipe -> idSet.add(recipe.getId()));
+        Long id = notExistingId(idSet, 1L);
+
+        // when
+        Executable executable = () -> recipeService.findCommandById(id);
+
+        // then
+        assertThrows(RuntimeException.class, executable);
+    }
+
+    private Long notExistingId(final Set<Long> idsSet, final Long id) {
+        return idsSet.contains(id) ? notExistingId(idsSet, id + 1) : id;
     }
 
 }

@@ -96,4 +96,15 @@ class RecipeControllerTest {
                 .andExpect(model().attribute("recipe", instanceOf(RecipeCommand.class)));
     }
 
+    @Test
+    void deleteRecipe() throws Exception {
+        // given
+        // when
+        mockMvc.perform(get("/recipe/2/delete"))
+                // then
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+
+    }
+
 }
