@@ -13,24 +13,15 @@
             crossorigin="anonymous"
             th:src="@{/webjars/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js}"></script>
 
-    <style type="text/css">
-
-        .card-margin {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-    </style>
-
     <title th:text="${recipe.description}">Title</title>
 </head>
 <body>
 
-<div class="container-fluid">
+<div class="container-fluid mt-3 mb-3">
     <div class="row">
         <div class="col-md-6 offset-md-3">
 
-            <div class="card align-content-center card-margin">
+            <div class="card align-content-center mb-3">
                 <div class="card-header">
                     <h3 class="card-title h3" th:text="${recipe.description}">Descriptions</h3>
                 </div>
@@ -98,7 +89,7 @@
                 </div>
             </div>
 
-            <div class="card align-content-center card-margin">
+            <div class="card align-content-center mb-3">
                 <div class="card-header">
                     <h3 class="card-title h3">Ingredients</h3>
                 </div>
@@ -123,7 +114,7 @@
                 </div>
             </div>
 
-            <div class="card align-content-center card-margin">
+            <div class="card align-content-center mb-3">
                 <div class="card-header">
                     <h3 class="card-title h3">Directions</h3>
                 </div>
@@ -138,7 +129,7 @@
                 </div>
             </div>
 
-            <div class="card align-content-center card-margin">
+            <div class="card align-content-center">
                 <div class="card-header">
                     <h3 class="card-title h3">Notes</h3>
                 </div>

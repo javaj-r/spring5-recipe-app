@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+          rel="stylesheet" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/5.0.0-beta1/css/bootstrap.min.css}">
+
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"
+            th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"
+            th:src="@{/webjars/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js}"></script>
+
+    <title>Recipe Form</title>
+</head>
+<body>
+
+<!-- /*@thymeleaf id="recipe" type="guru.springframework.domain.recipe"*/ -->
+<div class="container-fluid mt-3 mb-3">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 ">
+
+            <form th:object="${recipe}" th:action="@{/recipe/}">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="card align-content-center mb-3">
+                    <div class="card-header">
+                        <h3 class="card-title h3">Recipe Information</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text justify-content-center col-md-3" for="description">Recipe
+                                    Description:</label>
+                                <input class="form-control" type="text" id="description" th:field="*{description}">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-group-sm mb-3">
+                                <label class="input-group-text justify-content-center  col-md-3">categories:</label>
+                                <div class="form-control">
+                                    <div class="form-check-inline form-switch col-md-6">
+                                        <input class="form-check-input" type="checkbox" id="american" value="">
+                                        <label class="form-check-label" for="american">Category American</label>
+                                    </div>
+                                    <div class="form-check-inline form-switch col-md-5">
+                                        <input class="form-check-input" type="checkbox" id="mexican" value="">
+                                        <label class="form-check-label" for="mexican">Category Mexican</label>
+                                    </div>
+                                    <div class="form-check-inline form-switch col-md-6">
+                                        <input class="form-check-input" type="checkbox" id="italian" value="">
+                                        <label class="form-check-label" for="italian">Category Italian</label>
+                                    </div>
+                                    <div class="form-check-inline form-switch col-md-5">
+                                        <input class="form-check-input" type="checkbox" id="french" value="">
+                                        <label class="form-check-label" for="french">Category French</label>
+                                    </div>
+                                    <div class="form-check-inline form-switch col-md-6">
+                                        <input class="form-check-input" type="checkbox" id="korean" value="">
+                                        <label class="form-check-label" for="korean">Category Korean</label>
+                                    </div>
+                                    <div class="form-check-inline form-switch col-md-5">
+                                        <input class="form-check-input" type="checkbox" id="chinese" value="">
+                                        <label class="form-check-label" for="chinese">Category Chinese</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text justify-content-center col-md-6" for="prepTime">Prep
+                                        time:</label>
+                                    <input class="form-control" type="number" id="prepTime" th:field="*{prepTime}">
+                                    <label class="input-group-text justify-content-center" for="prepTime">min</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text justify-content-center col-md-6" for="difficulty">Difficulty:</label>
+                                    <select class="form-select" id="difficulty">
+                                        <option selected>Choose...</option>
+                                        <option value="1">EASY</option>
+                                        <option value="2">MODERATE</option>
+                                        <option value="3">HARD</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text justify-content-center col-md-6" for="cookTime">Cook
+                                        time:</label>
+                                    <input class="form-control" type="number" id="cookTime" th:field="*{cookTime}">
+                                    <label class="input-group-text justify-content-center" for="cookTime">min</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text justify-content-center col-md-6" for="servings">Serving:</label>
+                                    <input class="form-control" type="number" id="servings" th:field="*{servings}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text justify-content-center col-md-6"
+                                           for="source">Source:</label>
+                                    <input class="form-control" type="text" id="source" th:field="*{source}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text justify-content-center col-md-6"
+                                           for="url">URL:</label>
+                                    <input class="form-control" type="url" id="url" th:field="*{url}">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card align-content-center mb-3">
+                    <div class="card-header">
+                        <h3 class="card-title h3">Ingredients</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul>
+                                    <li th:remove="all">1 Cup of milk</li>
+                                    <li th:remove="all">1 Teaspoon of chocolate</li>
+                                    <li th:each="ingredient : *{ingredients}"
+                                        th:with="amount=${ingredient.amount.stripTrailingZeros()},
+                                    unit=${(!ingredient.unitOfMeasure.description.equals('Each') ?
+                                    (' ' + ingredient.unitOfMeasure.description + ' of ') : ' ')},
+                                    description=${ingredient.description}"
+
+                                        th:text="${amount} + ${unit} + ${ingredient.description}">
+                                        1 Teaspoon of sugar
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card align-content-center mb-3">
+                    <div class="card-header">
+                        <h3 class="card-title h3">Directions</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-floating ">
+                                <textarea class="form-control" id="directions" placeholder="Write directions here"
+                                          th:field="*{directions}"></textarea>
+                                <label for="directions">Directions:</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card align-content-center mb-3">
+                    <div class="card-header">
+                        <h3 class="card-title h3">Notes</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-floating ">
+                                <textarea class="form-control" id="notes" placeholder="Write notes here"
+                                          th:field="*{notes.recipeNotes}"></textarea>
+                                <label for="notes">Notes:</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card align-content-center">
+                    <button type="submit" class="btn btn-light"><span class="h5">Submit</span></button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
