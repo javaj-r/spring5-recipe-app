@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-th:with="title=${(recipe.description + '''s Ingredients')}">
+      th:with="title=${(recipe.description + '''s Ingredients')}">
 <head>
     <meta charset="UTF-8">
 
@@ -55,7 +55,9 @@ th:with="title=${(recipe.description + '''s Ingredients')}">
                             </tr>
 
                             <!-- /*@thymesVar id="recipe" type="guru.springframework.domain.Recipe" */-->
-                            <tr th:each="ingredient: ${recipe.ingredients}" th:with="path = ${('/recipe/' + recipe.id)}">
+                            <tr th:each="ingredient: ${recipe.ingredients}"
+                                th:with="path = ${('/recipe/' + recipe.id + '/ingredient/') + ingredient.id}">
+
                                 <td th:text="${ingredient.id}">93464</td>
                                 <td th:text="${ingredient.description}">Salt</td>
                                 <td>
