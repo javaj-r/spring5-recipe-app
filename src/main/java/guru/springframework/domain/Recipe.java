@@ -47,6 +47,9 @@ public class Recipe extends BaseEntity {
     }
 
     public void addIngredients(Ingredient ingredient) {
+        if (ingredient != null) {
+            ingredient.setRecipe(this);
+        }
         this.ingredients.add(ingredient);
     }
 
@@ -86,7 +89,7 @@ public class Recipe extends BaseEntity {
         }
 
         public Recipe build() {
-            Recipe recipe  = new Recipe(description, prepTime, cookTime, servings, source,
+            Recipe recipe = new Recipe(description, prepTime, cookTime, servings, source,
                     url, directions, image, difficulty, notes, ingredients, categories);
 
             recipe.setId(this.id);

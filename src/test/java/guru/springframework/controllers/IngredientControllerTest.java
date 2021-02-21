@@ -88,6 +88,23 @@ class IngredientControllerTest {
     }
 
     @Test
+    void newIngredientForm() throws Exception {
+        // given
+        when(unitOfMeasureService.findAllCommands()).thenReturn(new HashSet<>());
+
+        // when
+        mockMvc.perform(get("/recipe/2/ingredient/new"))
+                // then
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/form"))
+                .andExpect(model().attributeExists("ingredient", "units"))
+                .andExpect(model().attribute("ingredient", instanceOf(IngredientCommand.class)))
+                .andExpect(model().attribute("units", instanceOf(Set.class)));
+
+        verify(unitOfMeasureService).findAllCommands();
+    }
+
+    @Test
     void updateIngredientForm() throws Exception {
         // given
         IngredientCommand command = new IngredientCommand();
@@ -101,9 +118,8 @@ class IngredientControllerTest {
                 // then
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/form"))
-                .andExpect(model().attributeExists("ingredient"))
+                .andExpect(model().attributeExists("ingredient", "units"))
                 .andExpect(model().attribute("ingredient", instanceOf(IngredientCommand.class)))
-                .andExpect(model().attributeExists("units"))
                 .andExpect(model().attribute("units", instanceOf(Set.class)));
     }
 

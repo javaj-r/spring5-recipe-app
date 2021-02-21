@@ -1,6 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.IngredientCommand;
+import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Controller
 public class IngredientController {
+
+    private static final String INGREDIENT = "ingredient";
 
     private final RecipeService recipeService;
     private final IngredientService ingredientService;
@@ -31,7 +34,7 @@ public class IngredientController {
     @RequestMapping("recipe/{recipeId}/ingredient/{ingredientId}/show")
     public String getIngredient(@PathVariable String recipeId, @PathVariable String ingredientId, Model model) {
         model.addAttribute(
-                "ingredient",
+                INGREDIENT,
                 ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(ingredientId))
         );
 
@@ -39,10 +42,23 @@ public class IngredientController {
     }
 
     @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newIngredient(@PathVariable String recipeId, Model model) {
+        var ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
+
+        model.addAttribute(INGREDIENT, ingredientCommand);
+        model.addAttribute("units", unitOfMeasureService.findAllCommands());
+
+        return "recipe/ingredient/form";
+    }
+
+    @GetMapping
     @RequestMapping("recipe/{recipeId}/ingredient/{ingredientId}/update")
     public String updateIngredient(@PathVariable String recipeId, @PathVariable String ingredientId, Model model) {
         model.addAttribute(
-                "ingredient",
+                INGREDIENT,
                 ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(ingredientId))
         );
 
@@ -52,7 +68,7 @@ public class IngredientController {
     }
 
     @PostMapping
-    @RequestMapping("ingredient")
+    @RequestMapping(INGREDIENT)
     public String saveOrUpdate(@ModelAttribute IngredientCommand ingredientCommand) {
         var savedIngredientCommand = ingredientService.saveIngredientCommand(ingredientCommand);
         var recipeId = savedIngredientCommand.getRecipeId();

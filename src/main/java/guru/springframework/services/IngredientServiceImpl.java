@@ -40,6 +40,11 @@ public class IngredientServiceImpl implements IngredientService {
     public IngredientCommand saveIngredientCommand(IngredientCommand command) {
         final var cM = "IngredientService: saveIngredientCommand: ";
 
+        if (command == null) {
+            log.debug(cM + "Null IngredientCommand");
+            return null;
+        }
+
         var optionalRecipe = recipeRepository.findById(command.getRecipeId());
         var recipe = optionalRecipe.orElseThrow(() -> new RuntimeException(cM + "Recipe Not Found!!"));
 
@@ -63,8 +68,18 @@ public class IngredientServiceImpl implements IngredientService {
 
         var savedRecipe = recipeRepository.save(recipe);
 
+        if (command.getId() != null) {
+            return savedRecipe.getIngredients().stream()
+                    .filter(i -> Objects.equals(i.getId(), command.getId()))
+                    .findFirst()
+                    .map(ingredientToCommand::convert)
+                    .orElseThrow(() -> new RuntimeException(cM + "Ingredient Not Found!!"));
+        }
+
         return savedRecipe.getIngredients().stream()
-                .filter(i -> Objects.equals(i.getId(), command.getId()))
+                .filter(i -> Objects.equals(i.getDescription(), command.getDescription()))
+                .filter(i -> Objects.equals(i.getAmount(), command.getAmount()))
+                .filter(i -> Objects.equals(i.getUnitOfMeasure().getId(), command.getUnitOfMeasure().getId()))
                 .findFirst()
                 .map(ingredientToCommand::convert)
                 .orElseThrow(() -> new RuntimeException(cM + "Ingredient Not Found!!"));

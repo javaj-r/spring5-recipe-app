@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("recipe")
 public class RecipeController {
 
-    private final RecipeService recipeService;
     private static final String RECIPE ="recipe";
+    private final RecipeService recipeService;
 
     @GetMapping
     @RequestMapping("{id}/show")

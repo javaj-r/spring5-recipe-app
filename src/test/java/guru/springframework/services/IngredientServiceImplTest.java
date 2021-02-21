@@ -7,6 +7,7 @@ import guru.springframework.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
+import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,6 +84,10 @@ class IngredientServiceImplTest {
     @Test
     void saveIngredientCommand() {
         // given
+        UnitOfMeasure unit = new UnitOfMeasure();
+        unit.setId(1L);
+        unit.setDescription("Unit");
+
         IngredientCommand command = new IngredientCommand();
         command.setId(1L);
         command.setRecipeId(2L);
@@ -90,6 +95,7 @@ class IngredientServiceImplTest {
         Recipe recipe = Recipe.builder().id(2L).addIngredient(new Ingredient()).build();
         recipe.getIngredients().iterator().next().setId(1L);
 
+        when(unitRepository.findById(anyLong())).thenReturn(Optional.of(unit));
         when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(new Recipe()));
         when(recipeRepository.save(any())).thenReturn(recipe);
 
@@ -101,8 +107,46 @@ class IngredientServiceImplTest {
         assertEquals(Long.valueOf(1L), actualCommand.getId());
         verify(recipeRepository).findById(anyLong());
         verify(recipeRepository).save(any());
-
-
     }
+    @Test
+    void saveIngredientCommandNewCommand() {
+        // given
+        UnitOfMeasure unit = new UnitOfMeasure();
+        unit.setId(1L);
+        unit.setDescription("Unit");
+
+        Ingredient ingredient1 = new Ingredient();
+        ingredient1.setId(2L);
+        ingredient1.setDescription("ingredient1");
+        ingredient1.setUnitOfMeasure(unit);
+
+        Ingredient ingredient2 = new Ingredient();
+        ingredient2.setId(3L);
+        ingredient1.setDescription("New Ingredient");
+        ingredient2.setUnitOfMeasure(unit);
+
+        Recipe recipe = Recipe.builder()
+                .id(4L)
+                .addIngredient(ingredient1)
+                .addIngredient(ingredient2)
+                .build();
+
+        IngredientCommand command = ingredientToCommand.convert(ingredient2);
+
+        when(unitRepository.findById(anyLong())).thenReturn(Optional.of(unit));
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(new Recipe()));
+        when(recipeRepository.save(any())).thenReturn(recipe);
+
+        // when
+        IngredientCommand actualCommand = ingredientService.saveIngredientCommand(command);
+
+        // then
+        assertNotNull(actualCommand);
+        assertEquals(Long.valueOf(3L), actualCommand.getId());
+        verify(recipeRepository).findById(anyLong());
+        verify(recipeRepository).save(any());
+    }
+
+
 
 }

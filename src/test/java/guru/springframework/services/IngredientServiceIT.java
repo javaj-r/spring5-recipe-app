@@ -2,9 +2,12 @@ package guru.springframework.services;
 
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.converters.IngredientToIngredientCommand;
+import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
+import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.RecipeRepository;
+import guru.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -27,6 +29,12 @@ class IngredientServiceIT {
     RecipeRepository recipeRepository;
 
     @Autowired
+    UnitOfMeasureRepository unitRepository;
+
+    @Autowired
+    UnitOfMeasureToUnitOfMeasureCommand unitToCommand;
+
+    @Autowired
     IngredientService ingredientService;
 
     @Autowired
@@ -34,7 +42,7 @@ class IngredientServiceIT {
 
     @Transactional
     @Test
-    void saveIngredientCommand() {
+    void saveIngredientCommandUpdate() {
         // given
         Recipe recipe = recipeRepository.findAll().iterator().next();
         Set<Ingredient> ingredients = recipe.getIngredients();
@@ -52,6 +60,36 @@ class IngredientServiceIT {
         assertEquals(command.getRecipeId(), savedCommand.getRecipeId());
         assertEquals(command.getAmount(), savedCommand.getAmount());
         assertEquals(command.getUnitOfMeasure().getId(), savedCommand.getUnitOfMeasure().getId());
+    }
+
+    @Transactional
+    @Test
+    void saveNewIngredientCommand() {
+        // given
+        UnitOfMeasure unit = unitRepository.findAll().iterator().next();
+
+        Recipe recipe = recipeRepository.findAll().iterator().next();
+
+        IngredientCommand command = new IngredientCommand();
+        command.setRecipeId(recipe.getId());
+        command.setDescription(NEW_DESCRIPTION);
+        command.setUnitOfMeasure(unitToCommand.convert(unit));
+
+        // when
+        IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
+
+        // then
+        assertNotNull(savedCommand);
+        assertNotNull(savedCommand.getId());
+        assertEquals(NEW_DESCRIPTION, savedCommand.getDescription());
+        assertEquals(recipe.getId(), savedCommand.getRecipeId());
+        assertEquals(command.getAmount(), savedCommand.getAmount());
+        assertEquals(command.getUnitOfMeasure().getId(), savedCommand.getUnitOfMeasure().getId());
+    }
+
+    @Test
+    void saveNull() {
+        assertNull(ingredientService.saveIngredientCommand(null));
     }
 
 }
