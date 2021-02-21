@@ -67,7 +67,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void saveOrUpdateSave() throws Exception {
+    void saveOrUpdatePost() throws Exception {
         // given
         RecipeCommand command = new RecipeCommand();
         command.setId(2L);

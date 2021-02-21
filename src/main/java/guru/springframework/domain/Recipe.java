@@ -46,6 +46,10 @@ public class Recipe extends BaseEntity {
         return new Builder(new HashSet<>(), new HashSet<>());
     }
 
+    public void addIngredients(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
+    }
+
     @Setter
     @ToString
     @Accessors(fluent = true, chain = true)
