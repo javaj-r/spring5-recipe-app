@@ -34,8 +34,8 @@
 
                         <div class="row">
                             <div class="input-group mb-3">
-                                <label class="input-group-text justify-content-center col-md-3" for="description">Recipe
-                                    Description:</label>
+                                <label class="input-group-text justify-content-center col-md-3" for="description">
+                                    Recipe Description:</label>
                                 <input class="form-control" type="text" id="description" th:field="*{description}">
                             </div>
                         </div>
@@ -75,20 +75,27 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <label class="input-group-text justify-content-center col-md-6" for="prepTime">Prep
-                                        time:</label>
+                                    <label class="input-group-text justify-content-center col-md-6" for="prepTime">
+                                        Prep time:</label>
                                     <input class="form-control" type="number" id="prepTime" th:field="*{prepTime}">
                                     <label class="input-group-text justify-content-center" for="prepTime">min</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <label class="input-group-text justify-content-center col-md-6" for="difficulty">Difficulty:</label>
-                                    <select class="form-select" id="difficulty">
-                                        <option selected>Choose...</option>
-                                        <option value="1">EASY</option>
-                                        <option value="2">MODERATE</option>
-                                        <option value="3">HARD</option>
+                                    <label class="input-group-text justify-content-center col-md-6" for="difficulty">
+                                        Difficulty:</label>
+                                    <select class="form-select" id="difficulty" th:field="*{difficulty}">
+                                        <option th:remove="all" selected>Choose...</option>
+                                        <option th:remove="all" value="1">EASY</option>
+                                        <option th:remove="all" value="2">MODERATE</option>
+                                        <option
+                                                th:each="difficultyValue : ${T(guru.springframework.domain.Difficulty).values()}"
+                                                th:value="${difficultyValue.name()}"
+                                                th:text="${difficultyValue.name()}"
+                                        >
+                                            HARD
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -105,7 +112,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <label class="input-group-text justify-content-center col-md-6" for="servings">Serving:</label>
+                                    <label class="input-group-text justify-content-center col-md-6" for="servings">
+                                        Serving:</label>
                                     <input class="form-control" type="number" id="servings" th:field="*{servings}">
                                 </div>
                             </div>
