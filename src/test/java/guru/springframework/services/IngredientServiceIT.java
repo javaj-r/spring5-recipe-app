@@ -16,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -92,4 +93,19 @@ class IngredientServiceIT {
         assertNull(ingredientService.saveIngredientCommand(null));
     }
 
+    @Transactional
+    @Test
+    void deleteByRecipeIdAndIngredientId() {
+        // given
+        Recipe recipe = recipeRepository.findAll().iterator().next();
+        Ingredient ingredient = recipe.getIngredients().iterator().next();
+
+        // when
+        ingredientService.deleteByRecipeIdAndIngredientId(recipe.getId(), ingredient.getId());
+        Recipe savedRecipe = recipeRepository.findById(recipe.getId()).orElseThrow();
+        Set<Long> ids = savedRecipe.getIngredients().stream().map(Ingredient::getId).collect(Collectors.toSet());
+
+        // then
+        assertFalse(ids.contains(ingredient.getId()));
+    }
 }

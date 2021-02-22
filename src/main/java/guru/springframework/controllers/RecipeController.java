@@ -15,32 +15,28 @@ public class RecipeController {
     private static final String RECIPE ="recipe";
     private final RecipeService recipeService;
 
-    @GetMapping
-    @RequestMapping("{id}/show")
+    @GetMapping("{id}/show")
     public String getRecipe(@PathVariable String id, Model model) {
         model.addAttribute(RECIPE, recipeService.findCommandById(Long.valueOf(id)));
 
         return "recipe/show";
     }
 
-    @GetMapping
-    @RequestMapping("new")
+    @GetMapping("new")
     public String newRecipe(Model model) {
         model.addAttribute(RECIPE, new RecipeCommand());
 
         return "recipe/form";
     }
 
-    @GetMapping
-    @RequestMapping("{id}/update")
+    @GetMapping("{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
         model.addAttribute(RECIPE, recipeService.findCommandById(Long.valueOf(id)));
 
         return "recipe/form";
     }
 
-    @GetMapping
-    @RequestMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteRecipe(@PathVariable String id) {
         recipeService.deleteById(Long.valueOf(id));
 
@@ -48,8 +44,7 @@ public class RecipeController {
     }
 
 
-    @PostMapping
-    @RequestMapping(name = "recipe")
+    @PostMapping(name = "recipe")
     // @RequestMapping(name = "recipe", method = RequestMethod.POST) older way
     public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
         var id = recipeService.saveRecipeCommand(recipeCommand).getId();
