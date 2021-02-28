@@ -59,13 +59,12 @@ class ImageServiceImplTest {
 
         // when
         imageService.saveImageFile(id, multipartFile);
-        Recipe savedRecipe = captor.getValue();
 
         // then
         verify(recipeRepository).findById(anyLong());
         verify(recipeRepository).save(captor.capture());
+        Recipe savedRecipe = captor.getValue();
         assertEquals(multipartFile.getBytes().length, savedRecipe.getImage().length);
         assertArrayEquals(byteObjects, savedRecipe.getImage());
-
     }
 }

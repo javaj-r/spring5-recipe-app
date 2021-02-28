@@ -39,10 +39,12 @@
                             </ul>
                         </div>
 
-                        <div class="col-md-6 mb-3 text-center">
-                            <img class="rounded mb-2" src="../../static/images/default.png" style="height: 200px;"
-                                 th:src="@{/images/default.png}">
-                            <a class="btn btn-outline-primary" href="#" th:href="@{/recipe/__${recipe.id}__/image}">Change Picture</a>
+                        <div class="col-md-6 mb-3">
+                            <img class="rounded mb-2 mx-auto d-block" src="../../static/images/default.png"
+                                 style="height: 200px; max-width: 100%;"
+                                 th:src="${recipe.image != null ? ('/recipe/' + recipe.id + '/image')  : '/images/default.png' }">
+                            <a class="btn btn-outline-primary d-block" href="#"
+                               th:href="@{/recipe/__${recipe.id}__/image/upload}">Change Picture</a>
                         </div>
                     </div>
 
