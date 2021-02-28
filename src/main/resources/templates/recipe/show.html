@@ -31,12 +31,18 @@
                         <div class="col-md-3">
                             <h5>Categories:</h5>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-3">
                             <ul>
                                 <li th:remove="all">Cat 1</li>
                                 <li th:remove="all">Cat 2</li>
                                 <li th:each="cat:${recipe.categories}" th:text="${cat.description}">Cat 3</li>
                             </ul>
+                        </div>
+
+                        <div class="col-md-6 mb-3 text-center">
+                            <img class="rounded mb-2" src="../../static/images/default.png" style="height: 200px;"
+                                 th:src="@{/images/default.png}">
+                            <a class="btn btn-outline-primary" href="#" th:href="@{/recipe/__${recipe.id}__/image}">Change Picture</a>
                         </div>
                     </div>
 
