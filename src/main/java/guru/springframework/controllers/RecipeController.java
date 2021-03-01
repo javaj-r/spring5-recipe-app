@@ -59,13 +59,26 @@ public class RecipeController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
-    public ModelAndView handleNotFound(Exception e) {
-        log.error("Handling not found exception: " + e.getLocalizedMessage());
+    public ModelAndView handleNotFoundException(Exception e) {
+        log.error("Handling not found exception: " + e.getMessage());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("404error");
         modelAndView.getModelMap().addAttribute("title", "404 Recipe Not Found");
-        modelAndView.getModelMap().addAttribute("message", "404 Your required recipe not found");
+        modelAndView.getModelMap().addAttribute("message", e.getMessage());
+
+        return modelAndView;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NumberFormatException.class)
+    public ModelAndView handleNumberFormatException(Exception e) {
+        log.error("Handling number format exception: " + e.getMessage());
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("400error");
+        modelAndView.getModelMap().addAttribute("title", "400 Bad Request");
+        modelAndView.getModelMap().addAttribute("message", e.getMessage());
 
         return modelAndView;
     }
