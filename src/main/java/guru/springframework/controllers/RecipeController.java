@@ -3,16 +3,23 @@ package guru.springframework.controllers;
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.services.RecipeService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("recipe")
 public class RecipeController {
 
     private static final String RECIPE = "recipe";
+    private static final String RECIPE_FORM = "recipe/form";
+
     private final RecipeService recipeService;
 
     @GetMapping("{id}/show")
@@ -26,14 +33,14 @@ public class RecipeController {
     public String newRecipe(Model model) {
         model.addAttribute(RECIPE, new RecipeCommand());
 
-        return "recipe/form";
+        return RECIPE_FORM;
     }
 
     @GetMapping("{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
         model.addAttribute(RECIPE, recipeService.findCommandById(Long.valueOf(id)));
 
-        return "recipe/form";
+        return RECIPE_FORM;
     }
 
     @GetMapping("/{id}/delete")
@@ -44,8 +51,14 @@ public class RecipeController {
     }
 
     @PostMapping(name = "recipe")
-    // @RequestMapping(name = "recipe", method = RequestMethod.POST) older way
-    public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult result) {
+
+        if (result.hasErrors()) {
+            result.getAllErrors().parallelStream().forEach(objectError -> log.debug(objectError.getDefaultMessage()));
+
+            return RECIPE_FORM;
+        }
+
         var id = recipeService.saveRecipeCommand(recipeCommand).getId();
 
         return String.format("redirect:/recipe/%s/show", id);
