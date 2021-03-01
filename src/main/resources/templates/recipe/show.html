@@ -68,7 +68,7 @@
                             <h5>Cook time:</h5>
                         </div>
                         <div class="col-md-3">
-                            <p th:text="${recipe.cookTime} + ' min'">30 min</p>
+                            <p th:text="${recipe.cookTime} ?: '0' + ' min'">30 min</p>
                         </div>
                         <div class="col-md-3">
                             <h5>Serving:</h5>
@@ -83,14 +83,17 @@
                             <h5>Source:</h5>
                         </div>
                         <div class="col-md-3">
-                            <p th:text="${recipe.source}">30 min</p>
+                            <span th:if="${#strings.isEmpty(recipe.source)}" th:text="'NOT AVAILABLE'"></span>
+                            <p th:if="${!#strings.isEmpty(recipe.source)}" th:text="${recipe.source}">30 min</p>
                         </div>
                         <div class="col-md-3">
                             <h5>URL:</h5>
                         </div>
                         <div class="col-md-3">
+                            <span th:if="${#strings.isEmpty(recipe.url)}" th:text="'NOT AVAILABLE'"></span>
                             <a href="#" target="_blank" title="http://www.example.com"
-                               th:href="${recipe.url}" th:title="${recipe.url}">Read More</a>
+                               th:if="${!#strings.isEmpty(recipe.url)}" th:href="${recipe.url}"
+                               th:title="${recipe.url}">Read More</a>
                         </div>
                     </div>
 

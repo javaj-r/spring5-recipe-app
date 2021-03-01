@@ -103,6 +103,8 @@ class RecipeControllerTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "")
                         .param("description", "some string")
+                        .param("prepTime", "1")
+                        .param("servings", "1")
                         .param("directions", "some directions for recipe")
         )
                 // then

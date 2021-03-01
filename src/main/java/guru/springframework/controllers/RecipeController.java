@@ -50,8 +50,8 @@ public class RecipeController {
         return "redirect:/";
     }
 
-    @PostMapping(name = "recipe")
-    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult result) {
+    @PostMapping(name = RECIPE)
+    public String saveOrUpdate(@Valid @ModelAttribute(RECIPE) RecipeCommand recipeCommand, BindingResult result) {
 
         if (result.hasErrors()) {
             result.getAllErrors().parallelStream().forEach(objectError -> log.debug(objectError.getDefaultMessage()));
