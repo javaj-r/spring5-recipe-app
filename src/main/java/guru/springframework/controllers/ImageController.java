@@ -24,25 +24,24 @@ public class ImageController {
 
     private final ImageService imageService;
     private final RecipeService recipeService;
-    ;
 
     @GetMapping("upload")
-    public String getImageForm(@PathVariable Long recipeId, Model model) {
-        model.addAttribute("recipe", recipeService.findCommandById(recipeId));
+    public String getImageForm(@PathVariable String recipeId, Model model) {
+        model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(recipeId)));
 
         return "recipe/image/form";
     }
 
     @PostMapping("upload")
-    public String handleImagePost(@PathVariable Long recipeId, @RequestParam("imageFile") MultipartFile imageFile) {
-        imageService.saveImageFile(recipeId, imageFile);
+    public String handleImagePost(@PathVariable String recipeId, @RequestParam("imageFile") MultipartFile imageFile) {
+        imageService.saveImageFile(Long.valueOf(recipeId), imageFile);
 
         return "redirect:/recipe/{recipeId}/show";
     }
 
     @GetMapping
-    public void renderImageFromDatabase(@PathVariable Long recipeId, HttpServletResponse response) throws IOException {
-        var image = recipeService.findCommandById(recipeId).getImage();
+    public void renderImageFromDatabase(@PathVariable String recipeId, HttpServletResponse response) throws IOException {
+        var image = recipeService.findCommandById(Long.valueOf(recipeId)).getImage();
         if (image != null) {
             var bytes = new byte[image.length];
             var i = 0;

@@ -1,6 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.services.ImageService;
 import guru.springframework.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +45,9 @@ class ImageControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(ControllerExceptionHandler.class)
+                .build();
     }
 
     @Test
@@ -104,6 +107,30 @@ class ImageControllerTest {
         // then
         assertEquals(bytes.length, response.getContentAsByteArray().length);
         assertArrayEquals(bytes, response.getContentAsByteArray());
+    }
+
+
+    @Test
+    void getRecipeIsNotFoundException() throws Exception {
+        // given
+        when(recipeService.findCommandById(anyLong())).thenThrow(NotFoundException.class);
+        // when
+        mockMvc.perform(get("/recipe/1/image/upload"))
+                // then
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
+
+        verify(recipeService).findCommandById(anyLong());
+    }
+
+    @Test
+    void getRecipeNumberFormatException() throws Exception {
+        // given
+        // when
+        mockMvc.perform(get("/recipe/badId/image/upload"))
+                // then
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
     }
 
 }
