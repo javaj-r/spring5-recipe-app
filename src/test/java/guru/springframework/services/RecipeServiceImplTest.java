@@ -1,6 +1,7 @@
 package guru.springframework.services;
 
 import guru.springframework.domain.Recipe;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,7 +64,7 @@ class RecipeServiceImplTest {
         // when
         Executable executable = () -> recipeService.findById(anyLong());
         // then
-        assertThrows(RuntimeException.class, executable);
+        assertThrows(NotFoundException.class, executable);
         verify(repository).findById(anyLong());
         verify(repository, never()).findAll();
     }

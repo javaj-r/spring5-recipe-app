@@ -1,6 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,6 +51,18 @@ class RecipeControllerTest {
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"))
                 .andExpect(model().attribute("recipe", instanceOf(RecipeCommand.class)));
+
+        verify(recipeService).findCommandById(anyLong());
+    }
+
+    @Test
+    void getRecipeIsNotFound() throws Exception {
+        // given
+        when(recipeService.findCommandById(anyLong())).thenThrow(NotFoundException.class);
+        // when
+        mockMvc.perform(get("/recipe/1/show"))
+                // then
+                .andExpect(status().isNotFound());
 
         verify(recipeService).findCommandById(anyLong());
     }
