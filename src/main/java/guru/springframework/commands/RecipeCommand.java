@@ -36,7 +36,7 @@ public class RecipeCommand {
     private Integer servings;
     private String source;
 
-    @URL
+    @URL(regexp = "(https?)://(www\\.)?.*\\.(\\D*/?)$")
     private String url;
 
     @NotBlank
