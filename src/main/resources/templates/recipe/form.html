@@ -119,7 +119,7 @@
                                         <option
                                                 th:each="difficultyValue : ${T(guru.springframework.domain.Difficulty).values()}"
                                                 th:value="${difficultyValue.name()}"
-                                                th:text="${difficultyValue.name()}"
+                                                th:text="#{${'difficulty.' + difficultyValue.name()}}"
                                         >
                                             HARD
                                         </option>
