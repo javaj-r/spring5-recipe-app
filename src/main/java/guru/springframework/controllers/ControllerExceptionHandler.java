@@ -23,7 +23,7 @@ public class ControllerExceptionHandler {
         log.error("Handling number format exception: " + e.getMessage());
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("400error");
+        modelAndView.setViewName("error/400error");
         modelAndView.getModelMap().addAttribute("title", "400 Bad Request");
         modelAndView.getModelMap().addAttribute("message", e.getMessage());
 
@@ -37,7 +37,7 @@ public class ControllerExceptionHandler {
         log.error("Handling not found exception: " + e.getMessage());
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("404error");
+        modelAndView.setViewName("error/404error");
         modelAndView.getModelMap().addAttribute("title", "404 Not Found");
         modelAndView.getModelMap().addAttribute("message", e.getMessage());
 
