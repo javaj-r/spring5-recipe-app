@@ -1,7 +1,7 @@
 version: 2.1
 
-orbs:
-  maven: circleci/maven@1.1.1
+#orbs:
+#  maven: circleci/maven@1.1.1
 
 jobs:
   build:
@@ -26,9 +26,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "pom.xml" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+          - v1-dependencies-{{ checksum "pom.xml" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
 
       - run: mvn dependency:go-offline
 
@@ -47,8 +47,8 @@ jobs:
           name: Send to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
 
-workflows:
-  maven_test:
-    jobs:
-      - maven/test: # checkout, build, test, and upload test results
-          command: -X verify
+#workflows:
+#  maven_test:
+#    jobs:
+#      - maven/test: # checkout, build, test, and upload test results
+#          command: -X verify
