@@ -118,7 +118,7 @@ class ImageControllerTest {
         mockMvc.perform(get("/recipe/1/image/upload"))
                 // then
                 .andExpect(status().isNotFound())
-                .andExpect(view().name("404error"));
+                .andExpect(view().name("error/404error"));
 
         verify(recipeService).findCommandById(anyLong());
     }
@@ -130,7 +130,7 @@ class ImageControllerTest {
         mockMvc.perform(get("/recipe/badId/image/upload"))
                 // then
                 .andExpect(status().isBadRequest())
-                .andExpect(view().name("400error"));
+                .andExpect(view().name("error/400error"));
     }
 
 }
